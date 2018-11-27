@@ -698,6 +698,29 @@ def findDate(txt):
 	return fm, fd
 
 
+def makeDisplayPath(path, max, sep = '/', rm = '...'):
+
+	if len(path) <= max:
+		return path
+
+	p = path.split(sep)
+	if not len(p):
+		return path[0 : max-len(rm)] + rm
+
+	ml = len(p)
+	while len(path) > max:
+
+		ml -= 1
+		if 0 >= ml or 2 >= len(p):
+			return path[0 : max-len(rm)] + rm
+
+		else:
+			p = p[0 : len(p) - 2] + [p[-1]]
+			path = sep.join(p[ 0 : len(p) - 2] + [rm, p[-1]])
+
+	return path;
+
+
 def drawScreen(p, ti, msgs = []):
 	global stdscr
 
@@ -810,6 +833,7 @@ def initCurses():
 
 def main():
 	global stdscr, msgs
+
 
 	#---------------------------------------------------------------
 	# Parse command line arguments
@@ -1094,7 +1118,7 @@ def main():
 				stdscr.addstr(0, 1, str(len(msgs)) + " : " + str(p))
 
 			# Draw file name
-			stdscr.addstr(0, 2, p['inputfile'])
+			stdscr.addstr(0, 2, makeDisplayPath(p['inputfile'], w - 3))
 
 			# Home the cursor
 			stdscr.addstr(0, 0, ">")
