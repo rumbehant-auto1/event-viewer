@@ -364,7 +364,7 @@ def processLineAuto(s):
 				if 1 < len(d):
 					try:
 						_p = int(d[0])
-						if 0 < p and 100 > p:
+						if 0 < _p and 100 > _p:
 							p = _p
 							s = d[1]
 					except:
